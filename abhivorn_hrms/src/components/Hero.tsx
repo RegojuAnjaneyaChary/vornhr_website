@@ -1,78 +1,138 @@
-import React from 'react';
-import { CheckCircle, ArrowRight } from 'lucide-react';
+// import { ArrowRight, CheckCircle } from "lucide-react";
 
-const Hero: React.FC = () => {
-  const features = [
-    'No credit card required',
-    '30-day free trial',
-    'Set up in 10 minutes',
-    'Cancel anytime',
-  ];
+// const Hero = () => {
+//   return (
+//     <section className="pt-28 sm:pt-36 pb-20 text-center">
+//       <div className="max-w-6xl mx-auto px-4">
+//         <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold mb-6">
+//           HR Management
+//           <span className="block sm:inline bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+//             {" "}Simplified
+//           </span>
+//         </h1>
 
+//         <p className="text-gray-600 max-w-2xl mx-auto mb-10">
+//           All-in-one HR platform for payroll, attendance and compliance.
+//         </p>
+
+//         <div className="flex flex-col sm:flex-row justify-center gap-4">
+//           <a href="#pricing" className="bg-blue-600 text-white px-6 py-3 rounded-lg">
+//             Start Free Trial <ArrowRight className="inline ml-1 h-4 w-4" />
+//           </a>
+//           <a href="#demo" className="border px-6 py-3 rounded-lg">
+//             Schedule Demo
+//           </a>
+//         </div>
+
+//         <div className="flex flex-wrap justify-center gap-6 mt-10 text-sm">
+//           {["No credit card", "30-day trial", "Cancel anytime"].map((f) => (
+//             <div key={f} className="flex items-center">
+//               <CheckCircle className="h-4 w-4 text-blue-500 mr-2" />
+//               {f}
+//             </div>
+//           ))}
+//         </div>
+//       </div>
+//     </section>
+//   );
+// };
+
+// export default Hero;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import { ArrowRight, CheckCircle } from "lucide-react";
+
+const Hero = () => {
   return (
-    <section className="pt-32 pb-20 md:pt-40 md:pb-28">
-      <div className="container-clean">
-        <div className="max-w-4xl mx-auto text-center">
-          {/* Badge */}
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary-50 text-primary-700 text-sm font-medium mb-8">
-            <span className="h-2 w-2 bg-primary-500 rounded-full mr-2 animate-pulse"></span>
-            Designed for modern teams
-          </div>
-
-          {/* Main heading */}
-          <h1 className="heading-1 mb-6">
+    <section className="pt-24 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 text-center">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        
+        {/* HEADING */}
+        <h1
+          className="
+            font-bold mb-6
+            text-3xl
+            sm:text-4xl
+            md:text-5xl
+            lg:text-6xl
+            leading-tight
+          "
+        >
+          <span className="block sm:inline">
             HR Management
-            <span className="text-primary-600"> Simplified</span>
-          </h1>
+          </span>
 
-          {/* Subheading */}
-          <p className="body-lg mb-10 max-w-2xl mx-auto">
-            An all-in-one platform to manage employees, payroll, time off, 
-            and compliance. Built for startups and growing businesses.
-          </p>
+          <span
+            className="
+              block sm:inline sm:ml-2
+              bg-gradient-to-r from-blue-600 to-purple-600
+              bg-clip-text text-transparent
+            "
+          >
+            Simplified
+          </span>
+        </h1>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-14">
-            <button className="btn-primary">
-              Start Free Trial
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </button>
-            <button className="btn-secondary">
-              Schedule Demo
-            </button>
-          </div>
+        {/* DESCRIPTION */}
+        <p className="text-gray-600 max-w-xl sm:max-w-2xl mx-auto mb-10 text-base sm:text-lg">
+          All-in-one HR platform for payroll, attendance, and compliance —
+          built for growing teams.
+        </p>
 
-          {/* Features list */}
-          <div className="flex flex-wrap justify-center gap-6">
-            {features.map((feature, index) => (
-              <div
-                key={index}
-                className="flex items-center text-gray-600"
-              >
-                <CheckCircle className="h-4 w-4 text-primary-500 mr-2" />
-                <span className="text-sm">{feature}</span>
-              </div>
-            ))}
-          </div>
+        {/* CTA BUTTONS */}
+        <div className="flex flex-col sm:flex-row justify-center gap-4 mb-10">
+          <a
+            href="#pricing"
+            className="
+              w-full sm:w-auto
+              inline-flex items-center justify-center
+              bg-blue-600 hover:bg-blue-700
+              text-white px-6 py-3 rounded-lg
+              font-medium transition
+            "
+          >
+            Start Free Trial
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </a>
 
-          {/* Preview image placeholder */}
-          <div className="mt-20 relative">
-            <div className="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-transparent z-10"></div>
-            <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-8 border border-gray-200">
-              <div className="grid grid-cols-3 gap-4 mb-4">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="h-4 bg-gray-200 rounded-full"></div>
-                ))}
-              </div>
-              <div className="h-64 bg-white rounded-lg border border-gray-200 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-gray-400 text-sm mb-2">Dashboard Preview</div>
-                  <div className="text-gray-300">HRFlow Dashboard</div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <a
+            href="#demo"
+            className="
+              w-full sm:w-auto
+              inline-flex items-center justify-center
+              border border-gray-300
+              px-6 py-3 rounded-lg
+              font-medium text-gray-700
+              hover:bg-gray-50 transition
+            "
+          >
+            Schedule Demo
+          </a>
         </div>
+
+        {/* FEATURES */}
+        <div className="flex flex-wrap justify-center gap-x-6 gap-y-4 text-sm sm:text-base">
+          {["No credit card", "30-day trial", "Cancel anytime"].map((f) => (
+            <div key={f} className="flex items-center text-gray-600">
+              <CheckCircle className="h-4 w-4 text-blue-500 mr-2" />
+              {f}
+            </div>
+          ))}
+        </div>
+
       </div>
     </section>
   );

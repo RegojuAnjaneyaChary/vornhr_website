@@ -1,100 +1,210 @@
-import React from 'react';
-import { Star, Quote } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import {
+  Star,
+  Quote,
+  ChevronLeft,
+  ChevronRight,
+  Users,
+  TrendingUp,
+  Shield,
+  Clock,
+} from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
-interface Testimonial {
-  name: string;
-  role: string;
-  company: string;
-  content: string;
-  rating: number;
-}
-
-const Testimonials: React.FC = () => {
-  const testimonials: Testimonial[] = [
+const Testimonials = () => {
+  const slides = [
     {
-      name: 'Alex Morgan',
-      role: 'CEO',
-      company: 'StartupXYZ',
-      content: 'HRFlow transformed how we manage our team. What used to take days now takes minutes.',
+      name: "Vishal Pratap",
+      role: "HR Director",
+      company: "Cred Marg",
+      content:
+        "Reduced our hiring time by 60% and improved candidate quality significantly.",
       rating: 5,
+      icon: Users,
+      color: "from-blue-500 to-cyan-500",
     },
     {
-      name: 'Sarah Chen',
-      role: 'HR Director',
-      company: 'TechCorp',
-      content: 'The payroll automation alone saved us 20 hours per month. Incredible product.',
+      name: "Sampath Nomula",
+      role: "Talent Acquisition Head",
+      company: "NextGen Hiring",
+      content:
+        "Automated our entire recruitment process. What used to take weeks now happens in days.",
       rating: 5,
+      icon: TrendingUp,
+      color: "from-emerald-500 to-green-500",
     },
     {
-      name: 'David Park',
-      role: 'Operations Lead',
-      company: 'GrowthLabs',
-      content: 'Simple, intuitive, and powerful. Exactly what a growing company needs.',
+      name: "Dr. Ravikanth & Shesha Shailaja",
+      role: "Administrative Director",
+      company: "Sai Sharanya Hospital",
+      content:
+        "Streamlined our staff management and payroll. Healthcare scheduling has never been this efficient.",
       rating: 5,
+      icon: Clock,
+      color: "from-purple-500 to-violet-500",
+    },
+    {
+      name: "Ananya Patel",
+      role: "Operations Manager",
+      company: "Pixel Eye Hospital",
+      content:
+        "Perfect for managing our medical staff across multiple shifts.",
+      rating: 5,
+      icon: Shield,
+      color: "from-amber-500 to-orange-500",
     },
   ];
 
+  const [index, setIndex] = useState(0);
+
+  // Auto slide
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIndex((i) => (i + 1) % slides.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const slideVariants = {
+    enter: {
+      opacity: 0,
+      rotateY: 90,
+      scale: 0.95,
+    },
+    center: {
+      opacity: 1,
+      rotateY: 0,
+      scale: 1,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+    exit: {
+      opacity: 0,
+      rotateY: -90,
+      scale: 0.95,
+      transition: { duration: 0.5, ease: "easeIn" },
+    },
+  };
+
   return (
-    <section id="customers" className="py-20 bg-white">
-      <div className="container-clean">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="text-sm font-medium text-primary-600 mb-4">TESTIMONIALS</div>
-          <h2 className="heading-2 mb-6">Loved by growing teams</h2>
-          <p className="body-lg">
-            See how companies like yours are streamlining their HR operations with HRFlow.
+    <section className="py-16 bg-gradient-to-b from-white to-blue-50">
+      <div className="max-w-5xl mx-auto px-4">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Loved by HR Teams
+          </h2>
+          <p className="text-gray-600">
+            Real feedback from real teams
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
-            <div key={index} className="card p-8 hover:shadow-lg">
-              <Quote className="h-8 w-8 text-primary-100 mb-6" />
-              
-              <p className="body-base mb-8 italic text-gray-700">
-                "{testimonial.content}"
-              </p>
-              
-              <div className="flex items-center">
-                <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center text-white font-bold mr-4">
-                  {testimonial.name.charAt(0)}
-                </div>
-                <div>
-                  <div className="font-semibold text-gray-900">{testimonial.name}</div>
-                  <div className="text-sm text-gray-600">{testimonial.role} at {testimonial.company}</div>
-                </div>
-              </div>
-              
-              <div className="flex items-center mt-6">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`h-4 w-4 ${i < testimonial.rating ? 'text-amber-400 fill-amber-400' : 'text-gray-200'}`}
-                  />
-                ))}
-                <span className="text-sm text-gray-500 ml-2">5.0</span>
-              </div>
-            </div>
-          ))}
+        {/* Slider */}
+        <div className="relative perspective-[1200px]">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={index}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              className="bg-white rounded-xl border shadow-lg p-8"
+            >
+              {(() => {
+                const slide = slides[index];
+                const Icon = slide.icon;
+                return (
+                  <>
+                    <div className="flex justify-between mb-6">
+                      <div
+                        className={`h-14 w-14 rounded-xl bg-gradient-to-br ${slide.color}
+                                    flex items-center justify-center`}
+                      >
+                        <Icon className="h-7 w-7 text-white" />
+                      </div>
+                      <Quote className="h-10 w-10 text-blue-100" />
+                    </div>
+
+                    <p className="text-lg italic text-gray-700 mb-8">
+                      "{slide.content}"
+                    </p>
+
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                      <div
+                        className={`h-12 w-12 rounded-full bg-gradient-to-br ${slide.color}
+                                    flex items-center justify-center text-white font-bold`}
+                      >
+                        {slide.name[0]}
+                      </div>
+                      <div className="flex-1">
+                        <div className="font-bold">{slide.name}</div>
+                        <div className="text-gray-600">{slide.role}</div>
+                        <div className="text-blue-600">{slide.company}</div>
+                      </div>
+                      <div className="flex">
+                        {[...Array(5)].map((_, i) => (
+                          <Star
+                            key={i}
+                            className="h-5 w-5 text-amber-400 fill-amber-400"
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </>
+                );
+              })()}
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Controls */}
+          <div className="flex justify-center mt-6 gap-4">
+            <button
+              onClick={() =>
+                setIndex((i) => (i - 1 + slides.length) % slides.length)
+              }
+              className="p-2 rounded-full bg-white shadow"
+            >
+              <ChevronLeft />
+            </button>
+            <button
+              onClick={() =>
+                setIndex((i) => (i + 1) % slides.length)
+              }
+              className="p-2 rounded-full bg-white shadow"
+            >
+              <ChevronRight />
+            </button>
+          </div>
         </div>
 
-        {/* Stats */}
-        <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6">
-          <div className="text-center">
-            <div className="text-4xl font-bold text-gray-900 mb-2">500+</div>
-            <div className="text-gray-600">Companies</div>
-          </div>
-          <div className="text-center">
-            <div className="text-4xl font-bold text-gray-900 mb-2">50k+</div>
-            <div className="text-gray-600">Employees</div>
-          </div>
-          <div className="text-center">
-            <div className="text-4xl font-bold text-gray-900 mb-2">98%</div>
-            <div className="text-gray-600">Satisfaction</div>
-          </div>
-          <div className="text-center">
-            <div className="text-4xl font-bold text-gray-900 mb-2">24/7</div>
-            <div className="text-gray-600">Support</div>
-          </div>
+        {/* STATS */}
+        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
+          {[
+            { label: "Companies", value: 4, color: "text-blue-600" },
+            { label: "Employees", value: 153, color: "text-emerald-600" },
+            { label: "Satisfaction", value: 99.2, suffix: "%", color: "text-amber-600" },
+            { label: "Support", value: 24, suffix: "/7", color: "text-purple-600" },
+          ].map((stat, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, rotateX: 90 }}
+              whileInView={{ opacity: 1, rotateX: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="bg-white rounded-xl p-6 text-center border shadow-sm"
+            >
+              <motion.div
+                initial={{ rotateY: 180 }}
+                whileInView={{ rotateY: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className={`text-3xl font-bold mb-2 ${stat.color}`}
+              >
+                {stat.value}
+                {stat.suffix || ""}
+              </motion.div>
+              <div className="text-gray-600">{stat.label}</div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

@@ -1,76 +1,108 @@
-import React, { useState } from 'react';
-import { Menu, X, Building2 } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { Menu, X } from "lucide-react";
+import logo5 from "../../public/logo5.png";
+
+interface NavItem {
+  label: string;
+  href: string;
+}
 
 const Navigation: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  const navItems = [
-    { label: 'Features', href: '#features' },
-    { label: 'How it works', href: '#how-it-works' },
-    { label: 'Pricing', href: '#pricing' },
-    { label: 'Customers', href: '#customers' },
+  const navItems: NavItem[] = [
+    { label: "Features", href: "#features" },
+    { label: "How it works", href: "#how-it-works" },
+    { label: "Pricing", href: "#pricing" },
+    { label: "Customers", href: "#testimonials" },
   ];
 
-  return (
-    <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-sm z-50 border-b border-gray-100">
-      <div className="container-clean py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center space-x-3">
-            <div className="p-2 bg-primary-50 rounded-lg">
-              <Building2 className="h-6 w-6 text-primary-600" />
-            </div>
-            <div>
-              <div className="text-xl font-semibold text-gray-900">HRFlow</div>
-              <div className="text-xs text-gray-500">Modern HR Management</div>
-            </div>
-          </div>
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+  const handleNavClick = () => setIsOpen(false);
+
+  return (
+    <nav
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-white/95 backdrop-blur-lg border-b border-gray-200 shadow"
+          : "bg-white/90 backdrop-blur-md border-b border-gray-100"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 py-2">
+        <div className="flex items-center justify-between h-14">
+          {/* Logo */}
+          <a href="/" className="flex items-center">
+            <img src={logo5} alt="Logo" className="h-9 w-auto" />
+          </a>
+
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center space-x-6">
             {navItems.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
-                className="text-gray-600 hover:text-gray-900 transition-colors font-medium"
+                onClick={handleNavClick}
+                className="text-gray-700 hover:text-primary-600 text-sm font-medium"
               >
                 {item.label}
               </a>
             ))}
-            <button className="btn-primary">
+
+            {/* GET STARTED → PRICING */}
+            <a
+              href="#pricing"
+              onClick={handleNavClick}
+              className="bg-gradient-to-r from-primary-600 to-primary-700
+                         text-white px-4 py-2 rounded-md text-sm font-medium shadow"
+            >
               Get Started
-            </button>
+            </a>
           </div>
 
-          {/* Mobile menu button */}
+          {/* Mobile Menu Button */}
           <button
             className="md:hidden p-2"
             onClick={() => setIsOpen(!isOpen)}
           >
-            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {isOpen ? <X /> : <Menu />}
           </button>
         </div>
 
-        {/* Mobile menu */}
-        {isOpen && (
-          <div className="md:hidden mt-4 pb-4 animate-fade-in">
-            <div className="space-y-4">
-              {navItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="block py-2 text-gray-600 hover:text-gray-900 transition-colors"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.label}
-                </a>
-              ))}
-              <button className="w-full btn-primary mt-4">
-                Get Started
-              </button>
-            </div>
+        {/* Mobile Menu */}
+        <div
+          className={`md:hidden transition-all duration-300 ${
+            isOpen ? "max-h-80 mt-2" : "max-h-0 overflow-hidden"
+          }`}
+        >
+          <div className="py-3 space-y-2 border-t">
+            {navItems.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                onClick={handleNavClick}
+                className="block px-4 py-2 text-sm text-gray-700"
+              >
+                {item.label}
+              </a>
+            ))}
+
+            {/* GET STARTED → PRICING (MOBILE) */}
+            <a
+              href="#pricing"
+              onClick={handleNavClick}
+              className="block text-center bg-gradient-to-r from-primary-600 to-primary-700
+                         text-white px-4 py-2 rounded-md text-sm font-medium"
+            >
+              Get Started
+            </a>
           </div>
-        )}
+        </div>
       </div>
     </nav>
   );
